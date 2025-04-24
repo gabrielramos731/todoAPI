@@ -1,4 +1,10 @@
 # Backend
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
 .venv
 
 # Frontend
