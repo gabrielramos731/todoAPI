@@ -1,6 +1,6 @@
 import styles from "./home.module.css";
 import logo from "../../assets/Logo.svg";
-import AddTask from "../../components/AddTask/AddTask"
+import AddTask from "../../components/addTask/AddTask"
 
 const Home = () => {
   return (
