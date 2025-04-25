@@ -1,0 +1,52 @@
+.mainContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    width: 100%;
+    height: 100%;
+    gap: 5px;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+  }
+  
+  .inputTask {
+    border: 1px solid #0d0d0d;
+    width: 400px;
+    height: 40px;
+    border-radius: var(--border-radius);
+    background-color: #262626;
+    color: #808080;
+    padding: 0px 20px;
+    font-size: var(--font-size);
+    outline: none;
+    transition: var(--transition);
+  }
+  
+  .inputTask:focus {
+    background-color: #2e2e2e;
+    color: var(--text-color);
+  }
+  
+  .taskButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: #1e6f9f;
+    padding: 0 10px;
+    height: 40px;
+    gap: 4px;
+    color: var(--text-color);
+    font-size: var(--font-size);
+    transition: var(--transition);
+  }
+  
+  .taskButton:hover {
+    background-color: #14608b;
+    cursor: pointer;
+  }
+  
