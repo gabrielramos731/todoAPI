@@ -5,7 +5,7 @@ const AddTask = () => {
   
   
   return (
-    <main className={styles.mainContent}>
+    <div className={styles.mainContent}>
       <input
         placeholder="Adicione uma nova tarefa"
         className={styles.inputTask}
@@ -15,7 +15,7 @@ const AddTask = () => {
         Criar
         <PlusCircle size={17} />
       </button>
-    </main>
+    </div>
   );
 };
 

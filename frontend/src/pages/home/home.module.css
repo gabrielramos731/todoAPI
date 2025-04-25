@@ -2,11 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color: var(--header-background-color);
   width: 100%;
   height: clamp(200px, 25vh, 400px);
-  container-type: inline-size;
-  container-name: mainHeader;
+  position: relative;
 }
 
 .logoImg {
