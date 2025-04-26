@@ -1,54 +1,11 @@
 import styles from "./TaskBoard.module.css";
 import Task from "../task/Task";
-import { useState } from "react";
 import AddTask from "../addTask/AddTask";
-
-type Tasktype = {
-  id: number;
-  description: string;
-  isDone: boolean;
-};
+import useTaskManager from "../../hooks/useTaskManager";
 
 const TaskBoard = () => {
-  const [tasks, setTasks] = useState<Tasktype[]>([
-    {
-      id: 1,
-      description: "Tarefa 1",
-      isDone: true,
-    },
-    {
-      id: 2,
-      description: "Tarefa 2",
-      isDone: false,
-    },
-    {
-      id: 3,
-      description: "Tarefa 3",
-      isDone: false,
-    },
-  ]);
-
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
-
-  const toggleDone = (id: number) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
-    );
-  };
-
-  const addTask = (description: string) => {
-    const newTask = {
-      id: tasks.length + 1,
-      description,
-      isDone: false,
-    };
-    setTasks([...tasks, newTask]);
-  };
-
+  const { tasks, addTask, deleteTask, toggleDone } = useTaskManager();
+  
   return (
     <>
       <AddTask onAddTask={addTask} />
