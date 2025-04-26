@@ -1,19 +1,16 @@
-.mainContent {
+.addTaskMainDiv {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    max-width: 90vw;
+    justify-content: space-between;
     width: 100%;
     gap: 5px;
     z-index: 1;
-    position: absolute;
-    top: 92%;
   }
   
   .inputTask {
     border: 1px solid #0d0d0d;
-    width: 400px;
+    width: 500px;
     height: 40px;
     border-radius: var(--border-radius);
     background-color: #262626;

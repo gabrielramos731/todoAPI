@@ -1,17 +1,39 @@
-import styles from "./addtask.module.css"
-import {PlusCircle} from "lucide-react";
+import styles from "./addtask.module.css";
+import { PlusCircle } from "lucide-react";
+import { useState } from "react";
 
-const AddTask = () => {
-  
-  
+type AddTaskProps = {
+  onAddTask: (description: string) => void;
+};
+
+const AddTask = ({ onAddTask }: AddTaskProps) => {
+  const [taskDescription, setTaskDescription] = useState("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskDescription(event.target.value);
+  };
+
+  const handleAddTask = () => {
+    if (taskDescription.trim()) {
+      onAddTask(taskDescription);
+      setTaskDescription("");
+    }
+  };
+
   return (
-    <div className={styles.mainContent}>
+    <div className={styles.addTaskMainDiv}>
       <input
         placeholder="Adicione uma nova tarefa"
         className={styles.inputTask}
         type="text"
+        value={taskDescription}
+        onChange={handleInputChange}
       />
-      <button type="submit" className={styles.taskButton}>
+      <button
+        type="submit"
+        className={styles.taskButton}
+        onClick={handleAddTask}
+      >
         Criar
         <PlusCircle size={17} />
       </button>
