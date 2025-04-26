@@ -20,6 +20,12 @@ const AddTask = ({ onAddTask }: AddTaskProps) => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleAddTask();
+    }
+  };
+
   return (
     <div className={styles.addTaskMainDiv}>
       <input
@@ -28,6 +34,7 @@ const AddTask = ({ onAddTask }: AddTaskProps) => {
         type="text"
         value={taskDescription}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <button
         type="submit"
