@@ -1,39 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getTasks } from "../services/taskService";
 
 type Tasktype = {
   id: number;
-  description: string;
-  isDone: boolean;
+  title: string;
+  body: string;
+  completed: boolean;
+  createDate: Date;
 };
 
 const useTaskManager = () => {
-  const [tasks, setTasks] = useState<Tasktype[]>([
-    {
-      id: 1,
-      description: "Tarefa 1",
-      isDone: true,
-    },
-    {
-      id: 2,
-      description: "Tarefa 2",
-      isDone: false,
-    },
-    {
-      id: 3,
-      description: "Tarefa 3",
-      isDone: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Tasktype[]>([]);
 
-  const addTask = (description: string) => {
-    if (!description.trim() || tasks.some((task) => task.description === description)) {
+  // Load Tasks from API on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTasks();
+        setTasks(data);
+      } catch (error) {
+        console.error("Erro ao buscar tarefas:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const addTask = (title: string) => {
+    if (!title.trim() || tasks.some((task) => task.title === title)) {
       return;
     }
 
     const newTask = {
-      id: tasks.length + 1, 
-      description,
-      isDone: false,
+      id: tasks.length + 1,
+      title,
+      body: "",
+      completed: false,
+      createDate: new Date(),
     };
     setTasks([...tasks, newTask]);
   };
@@ -45,7 +48,7 @@ const useTaskManager = () => {
   const toggleDone = (id: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
+        task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
   };

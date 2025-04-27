@@ -3,20 +3,20 @@ import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 
 type AddTaskProps = {
-  onAddTask: (description: string) => void;
+  onAddTask: (title: string) => void;
 };
 
 const AddTask = ({ onAddTask }: AddTaskProps) => {
-  const [taskDescription, setTaskDescription] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskDescription(event.target.value);
+    setTaskTitle(event.target.value);
   };
 
   const handleAddTask = () => {
-    if (taskDescription.trim()) {
-      onAddTask(taskDescription);
-      setTaskDescription("");
+    if (taskTitle.trim()) {
+      onAddTask(taskTitle);
+      setTaskTitle("");
     }
   };
 
@@ -32,7 +32,7 @@ const AddTask = ({ onAddTask }: AddTaskProps) => {
         placeholder="Adicione uma nova tarefa"
         className={styles.inputTask}
         type="text"
-        value={taskDescription}
+        value={taskTitle}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />

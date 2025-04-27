@@ -3,8 +3,10 @@ import { Trash2 } from "lucide-react";
 type TaskProps = {
   task: {
     id: number;
-    description: string;
-    isDone: boolean;
+    title: string;
+    body: string;
+    completed: boolean;
+    createDate: Date;
   };
   onDelete: (id: number) => void;
   onDone: (id: number) => void;
@@ -15,12 +17,12 @@ const Task = ({ task, onDelete, onDone }: TaskProps) => {
     <div>
       <input
         type="checkbox"
-        checked={task.isDone}
+        checked={task.completed}
         onChange={() => onDone(task.id)}
       />
       <span
         style={
-          task.isDone
+          task.completed
             ? {
                 textDecoration: "line-through",
                 color: "#808080",
@@ -28,8 +30,10 @@ const Task = ({ task, onDelete, onDone }: TaskProps) => {
             : undefined
         }
       >
-        {task.description}
+        {task.title}
       </span>
+      <span>{task.body}</span>
+      <span>{new Date(task.createDate).toLocaleDateString()}</span>
       <Trash2 onClick={() => onDelete(task.id)} />
     </div>
   );

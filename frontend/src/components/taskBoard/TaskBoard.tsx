@@ -5,7 +5,8 @@ import useTaskManager from "../../hooks/useTaskManager";
 
 const TaskBoard = () => {
   const { tasks, addTask, deleteTask, toggleDone } = useTaskManager();
-  
+
+  console.log(import.meta.env.VITE_API_URL);
   return (
     <>
       <AddTask onAddTask={addTask} />
@@ -14,7 +15,7 @@ const TaskBoard = () => {
           Tarefas criadas: <span>{tasks.length}</span>
         </p>
         <p className={styles.taskDone}>
-          Concluídas: <span>{tasks.filter((task) => task.isDone).length}</span>
+          Concluídas: <span>{tasks.filter((task) => task.completed).length}</span>
         </p>
       </div>
       <div className={styles.taskDiv}>
