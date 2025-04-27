@@ -1,7 +1,6 @@
 .mainDivTask {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   border-radius: var(--border-radius);
   background-color: #26262680;
 }
@@ -39,6 +38,7 @@
 
 .titleTask {
   width: 100%;
+  font-size: var(--font-size);
   align-self: flex-start;
   position: relative;
   color: inherit;
@@ -85,10 +85,31 @@
   align-items: center;
   gap: 12px;
   transition: all 0.4s ease;
-  padding: 20px;
+  padding: 40px;
+  position: relative;
 }
 
 .date {
-  align-self: flex-end;
+  color: #808080;
+  position: absolute;
   font-size: 0.7rem;
+  bottom: 5%;
+  right: 2%;
+}
+
+.bodyText {
+  font-size: var(--font-size);
+  color: #808080;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.inputBodyTask {
+  background-color: transparent;
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-size);
+  color: #808080;
+  
 }

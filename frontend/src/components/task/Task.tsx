@@ -16,9 +16,29 @@ type TaskProps = {
 
 const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
   const [isBodyVisible, setIsBodyVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(task.body);
 
   const handleTaskClick = () => {
     setIsBodyVisible((prev) => !prev);
+  };
+
+  const handleInputBlur = () => {
+    setIsEditing(false); // Sai do modo de edição ao perder o foco
+    // Aqui você pode adicionar lógica para salvar o texto editado, como uma chamada de API
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedText(e.target.value); // Atualiza o texto enquanto o usuário digita
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      setIsEditing(false); // Sai do modo de edição ao pressionar Enter
+      if (editedText.trim() !== task.body) {
+        // Aqui você pode salvar o texto editado, se necessário
+      }
+    }
   };
 
   return (
@@ -34,7 +54,7 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
               toggleDone(task.id);
             }}
           />
-          <span className={styles.titleTask}>{task.title}</span>
+          <h2 className={styles.titleTask}>{task.title}</h2>
         </span>
         <Trash2
           className={styles.trashIcon}
@@ -49,8 +69,23 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
       <div
         className={styles.bodyTask}
         style={{ display: isBodyVisible ? "flex" : "none" }}
+        onClick={() => setIsEditing(true)} // Ativa o modo de edição ao clicar em qualquer lugar da div
       >
-        <span>{task.body}</span>
+        <span className={styles.bodyText}>
+          {isEditing ? (
+            <input
+              className={styles.inputBodyTask}
+              type="text"
+              value={editedText}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              autoFocus
+              onKeyDown={handleInputKeyDown}
+            />
+          ) : (
+            <p>{editedText ? editedText : "Clique aqui para escrever..."}</p> // Apenas exibe o texto
+          )}
+        </span>
         <span className={styles.date}>
           {new Date(task.createDate).toLocaleDateString()}
         </span>
