@@ -5,7 +5,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=150)
     body = models.CharField(max_length=500)
     create_date = models.DateField(auto_now=True)
+    completed = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title
-    
