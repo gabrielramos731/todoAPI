@@ -22,11 +22,9 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
   };
 
   return (
-    <div
-      className={styles.mainDivTask}
-    >
+    <div className={styles.mainDivTask}>
       <div className={styles.resumeTask} onClick={handleTaskClick}>
-        <span>
+        <span className={styles.titleCheckboxSpan}>
           <input
             className={styles.checkBoxTask}
             type="checkbox"

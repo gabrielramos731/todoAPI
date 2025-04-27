@@ -15,8 +15,9 @@
   border-radius: var(--border-radius);
 }
 
-.resumeTask > span {
-  display: flex;
+.titleCheckboxSpan {
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 12px;
 }
 
