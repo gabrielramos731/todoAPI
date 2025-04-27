@@ -1,0 +1,93 @@
+.mainDivTask {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: var(--border-radius);
+  background-color: #26262680;
+}
+
+.resumeTask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #262626;
+  border-radius: var(--border-radius);
+}
+
+.resumeTask > span {
+  display: flex;
+  gap: 12px;
+}
+
+.checkBoxTask {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #4ea8de;
+  transition: box-shadow 0.4s ease;
+}
+
+.checkBoxTask:checked {
+  content: url("../../assets/checkbox-true.svg");
+  border: none;
+  box-shadow: 0 0 5px #5e60ce;
+  background-color: transparent;
+}
+
+.titleTask {
+  width: 100%;
+  align-self: flex-start;
+  position: relative;
+  color: inherit;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.checkBoxTask + .titleTask::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 45%;
+  width: 0;
+  height: 2px;
+  background-color: #808080;
+  transition: width 0.4s ease-out;
+}
+
+.checkBoxTask:checked + .titleTask {
+  color: #808080;
+}
+
+.checkBoxTask:checked + .titleTask::after {
+  width: 100%;
+}
+
+.trashIcon {
+  padding: 2px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.trashIcon:hover {
+  transform: scale(1.1);
+  background-color: #e25858a6;
+}
+
+.bodyTask {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.4s ease;
+  padding: 20px;
+}
+
+.date {
+  align-self: flex-end;
+  font-size: 0.7rem;
+}

@@ -8,13 +8,14 @@ const TaskBoard = () => {
 
   return (
     <>
+    
       <AddTask onAddTask={addTask} />
-      <div className={styles.mainTaskBoard}>
+      <div className={styles.taskBoardStatus}>
         <p className={styles.taskCreated}>
-          Tarefas criadas: <span>{tasks.length}</span>
+          Tarefas criadas: <span className={styles.taskCount}>{tasks.length}</span>
         </p>
         <p className={styles.taskDone}>
-          Concluídas: <span>{tasks.filter((task) => task.completed).length}</span>
+          Concluídas: <span className={styles.taskDoneCount}>{tasks.filter((task) => task.completed).length}</span>
         </p>
       </div>
       <div className={styles.taskDiv}>
@@ -26,7 +27,7 @@ const TaskBoard = () => {
               key={task.id}
               task={task}
               onDelete={deleteTask}
-              onDone={toggleDone}
+              toggleDone={toggleDone}
             />
           ))
         )}

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import styles from "./Task.module.css";
 
 type TaskProps = {
   task: {
@@ -9,32 +11,52 @@ type TaskProps = {
     createDate: Date;
   };
   onDelete: (id: number) => void;
-  onDone: (id: number) => void;
+  toggleDone: (id: number) => void;
 };
 
-const Task = ({ task, onDelete, onDone }: TaskProps) => {
+const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
+  const [isBodyVisible, setIsBodyVisible] = useState(false);
+
+  const handleTaskClick = () => {
+    setIsBodyVisible((prev) => !prev);
+  };
+
   return (
-    <div>
-      <input
-        type="checkbox"
-        checked={task.completed}
-        onChange={() => onDone(task.id)}
-      />
-      <span
-        style={
-          task.completed
-            ? {
-                textDecoration: "line-through",
-                color: "#808080",
-              }
-            : undefined
-        }
+    <div
+      className={styles.mainDivTask}
+    >
+      <div className={styles.resumeTask} onClick={handleTaskClick}>
+        <span>
+          <input
+            className={styles.checkBoxTask}
+            type="checkbox"
+            checked={task.completed}
+            onClick={(e) => e.stopPropagation()}
+            onChange={() => {
+              toggleDone(task.id);
+            }}
+          />
+          <span className={styles.titleTask}>{task.title}</span>
+        </span>
+        <Trash2
+          className={styles.trashIcon}
+          size={20}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(task.id);
+          }}
+        />
+      </div>
+
+      <div
+        className={styles.bodyTask}
+        style={{ display: isBodyVisible ? "flex" : "none" }}
       >
-        {task.title}
-      </span>
-      <span>{task.body}</span>
-      <span>{new Date(task.createDate).toLocaleDateString()}</span>
-      <Trash2 onClick={() => onDelete(task.id)} />
+        <span>{task.body}</span>
+        <span className={styles.date}>
+          {new Date(task.createDate).toLocaleDateString()}
+        </span>
+      </div>
     </div>
   );
 };
