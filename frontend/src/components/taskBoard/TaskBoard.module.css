@@ -1,0 +1,34 @@
+:root {
+    --span-padding: 2px 8px;
+}
+
+.taskBoardStatus {
+    width: 100%;
+    margin: 10% 0 4% 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskBoardStatus > p {
+    color: #4EA8DE
+}
+
+.taskCount {
+    background-color: #333333;
+    padding: var(--span-padding);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.taskDoneCount {
+    background-color: #333333;
+    padding: var(--span-padding);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.taskDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}

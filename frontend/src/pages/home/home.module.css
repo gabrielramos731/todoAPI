@@ -1,0 +1,30 @@
+.mainHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--header-background-color);
+  width: 100vw;
+  height: 25vh;
+  min-height: 200px;
+}
+
+.logoImg {
+  width: 160px;
+  height: auto;
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.logoImg:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(66, 153, 225, 0.3)) 
+    drop-shadow(0 0 20px rgba(124, 58, 237, 0.2));
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 90vw;
+}
+
