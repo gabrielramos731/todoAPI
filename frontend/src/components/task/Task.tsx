@@ -24,17 +24,16 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
   };
 
   const handleInputBlur = () => {
-    setIsEditing(false); // Sai do modo de edição ao perder o foco
-    // Aqui você pode adicionar lógica para salvar o texto editado, como uma chamada de API
+    setIsEditing(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedText(e.target.value); // Atualiza o texto enquanto o usuário digita
+    setEditedText(e.target.value);
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setIsEditing(false); // Sai do modo de edição ao pressionar Enter
+      setIsEditing(false);
       if (editedText.trim() !== task.body) {
         // Aqui você pode salvar o texto editado, se necessário
       }
@@ -69,7 +68,7 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
       <div
         className={styles.bodyTask}
         style={{ display: isBodyVisible ? "flex" : "none" }}
-        onClick={() => setIsEditing(true)} // Ativa o modo de edição ao clicar em qualquer lugar da div
+        onClick={() => setIsEditing(true)}
       >
         <span className={styles.bodyText}>
           {isEditing ? (
@@ -83,7 +82,9 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
               onKeyDown={handleInputKeyDown}
             />
           ) : (
-            <p>{editedText ? editedText : "Clique aqui para escrever..."}</p> // Apenas exibe o texto
+            <p className={styles.bodyDescription}>
+              {editedText ? editedText : "Clique aqui para escrever..."}
+            </p>
           )}
         </span>
         <span className={styles.date}>
