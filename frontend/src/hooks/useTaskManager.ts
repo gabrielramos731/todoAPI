@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getTasks } from "../services/taskService";
+import { getTasks, createTask } from "../services/taskService";
 
-type Tasktype = {
+export type Tasktype = {
   id: number;
   title: string;
   body: string;
@@ -14,16 +14,7 @@ const useTaskManager = () => {
 
   // Load Tasks from API on component mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-      } catch (error) {
-        console.error("Erro ao buscar tarefas:", error);
-      }
-    };
-
-    fetchData();
+    getTasks().then(setTasks);
   }, []);
 
   const addTask = (title: string) => {
@@ -31,14 +22,24 @@ const useTaskManager = () => {
       return;
     }
 
-    const newTask = {
+    const newTask: Tasktype = {
       id: tasks.length + 1,
       title,
-      body: "",
+      body: "Clique aqui para adicionar detalhes...",
       completed: false,
       createDate: new Date(),
     };
-    setTasks([...tasks, newTask]);
+
+    const create = async () => {
+      try {
+        const successful = await createTask(newTask);
+        if (successful) setTasks([...tasks, newTask]);
+      } catch (err) {
+        console.error("Erro ao criar task: ", err);
+      }
+    };
+
+    create();
   };
 
   const deleteTask = (id: number) => {
@@ -56,12 +57,14 @@ const useTaskManager = () => {
   const sortTasks = () => {
     const sortedTasks = [...tasks].sort((a, b) => {
       if (a.completed === b.completed) {
-        return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+        return (
+          new Date(b.createDate).getTime() - new Date(a.createDate).getTime()
+        );
       }
       return a.completed ? 1 : -1;
     });
     return sortedTasks;
-  }
+  };
 
   return { tasks, addTask, deleteTask, toggleDone, sortTasks };
 };
