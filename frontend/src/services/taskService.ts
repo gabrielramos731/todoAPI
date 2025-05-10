@@ -5,7 +5,4 @@ export const getTasks = async () => {
   return response.data;
 };
 
-export const getTaskById = async (id: number) => {
-  const response = await axiosInstance.get(`/${id}`);
-  return response.data;
-};
+
