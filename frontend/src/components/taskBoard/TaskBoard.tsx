@@ -4,7 +4,7 @@ import AddTask from "../addTask/AddTask";
 import useTaskManager from "../../hooks/useTaskManager";
 
 const TaskBoard = () => {
-  const { tasks, addTask, deleteTask, toggleDone } = useTaskManager();
+  const { tasks, addTask, deleteTask, toggleDone, sortTasks } = useTaskManager();
 
   return (
     <>
@@ -22,7 +22,7 @@ const TaskBoard = () => {
         {tasks.length === 0 ? (
           <p className={styles.noTaskMessage}>Nenhuma tarefa cadastrada.</p>
         ) : (
-          tasks.map((task) => (
+          sortTasks().map((task) => (
             <Task
               key={task.id}
               task={task}

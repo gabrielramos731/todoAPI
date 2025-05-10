@@ -53,7 +53,17 @@ const useTaskManager = () => {
     );
   };
 
-  return { tasks, addTask, deleteTask, toggleDone };
+  const sortTasks = () => {
+    const sortedTasks = [...tasks].sort((a, b) => {
+      if (a.completed === b.completed) {
+        return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+      }
+      return a.completed ? 1 : -1;
+    });
+    return sortedTasks;
+  }
+
+  return { tasks, addTask, deleteTask, toggleDone, sortTasks };
 };
 
 export default useTaskManager;
