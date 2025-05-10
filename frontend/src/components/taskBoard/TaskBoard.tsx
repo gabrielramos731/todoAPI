@@ -6,8 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const TaskBoard = () => {
   const { tasks, addTask, deleteTask, toggleDone, sortTasks } = useTaskManager();
-
-
+  
   return (
     <>
       <AddTask onAddTask={addTask} />
@@ -29,12 +28,7 @@ const TaskBoard = () => {
         ) : (
           <AnimatePresence>
             {sortTasks().map((task) => (
-              <motion.div
-                key={task.id}
-                layout
-
-                
-                >
+              <motion.div key={task.id} layout>
                 <Task
                   key={task.id}
                   task={task}
