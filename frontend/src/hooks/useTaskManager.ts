@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { getTasks, createTask, deleteTask, updateTask } from "../services/taskService";
+import {
+  getTasks,
+  createTask,
+  deleteTask,
+  updateTask,
+} from "../services/taskService";
 
 export type Tasktype = {
   id: number;
@@ -12,7 +17,6 @@ export type Tasktype = {
 const useTaskManager = () => {
   const [tasks, setTasks] = useState<Tasktype[]>([]);
 
-  // Load Tasks from API on component mount
   const loadTasks = async () => {
     try {
       await getTasks().then(setTasks);
@@ -53,21 +57,18 @@ const useTaskManager = () => {
   const toggleDone = (id: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
-        if(task.id === id) {
+        if (task.id === id) {
           try {
-            const updatedTask = {...task, completed: !task.completed}
-            updateTask(updatedTask)
-            return updatedTask
-          }catch(err) {
+            const updatedTask = { ...task, completed: !task.completed };
+            updateTask(updatedTask);
+            return updatedTask;
+          } catch (err) {
             console.error("Erro ao atualizar task: ", err);
           }
         }
-        return task
-      }
-      )
+        return task;
+      })
     );
-
-
   };
 
   const sortTasks = () => {
@@ -82,7 +83,11 @@ const useTaskManager = () => {
     return sortedTasks;
   };
 
-  return { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks };
+  const upgradeTask = (task: Tasktype) => {
+    updateTask(task)
+  };
+
+  return { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks, upgradeTask };
 };
 
 export default useTaskManager;
