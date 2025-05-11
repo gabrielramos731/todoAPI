@@ -1,42 +1,36 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { Tasktype } from "../../hooks/useTaskManager";
 import styles from "./Task.module.css";
 
 type TaskProps = {
-  task: {
-    id: number;
-    title: string;
-    body: string;
-    completed: boolean;
-    createDate: Date;
-  };
+  task: Tasktype;
   onDelete: (id: number) => void;
   toggleDone: (id: number) => void;
+  upgradeTask: (task: Tasktype) => void;
 };
 
-const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
+const Task = ({task, onDelete, toggleDone, upgradeTask }: TaskProps) => {
   const [isBodyVisible, setIsBodyVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(task.body);
-
   const handleTaskClick = () => {
     setIsBodyVisible((prev) => !prev);
-  };
-
-  const handleInputBlur = () => {
-    setIsEditing(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedText(e.target.value);
   };
 
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      setIsEditing(false);
-      if (editedText.trim() !== task.body) {
-        // Aqui você pode salvar o texto editado, se necessário
-      }
+  const handleInputFinish = (
+    e:
+      | React.FocusEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if ("key" in e && e.key !== "Enter") return; 
+    setIsEditing(false);
+    if (editedText.trim() !== task.body) {
+      upgradeTask({...task, body: editedText })
     }
   };
 
@@ -77,9 +71,9 @@ const Task = ({ task, onDelete, toggleDone }: TaskProps) => {
               type="text"
               value={editedText}
               onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              onBlur={handleInputFinish}
               autoFocus
-              onKeyDown={handleInputKeyDown}
+              onKeyDown={handleInputFinish}
             />
           ) : (
             <p className={styles.bodyDescription}>
