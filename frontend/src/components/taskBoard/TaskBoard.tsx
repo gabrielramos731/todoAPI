@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 
 const TaskBoard = () => {
-  const { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks } = useTaskManager();
+  const { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks, upgradeTask } = useTaskManager();
 
   useEffect(()=> {
     loadTasks();
@@ -39,6 +39,7 @@ const TaskBoard = () => {
                   task={task}
                   onDelete={removeTask}
                   toggleDone={toggleDone}
+                  upgradeTask={upgradeTask}
                 />
               </motion.div>
             ))}
