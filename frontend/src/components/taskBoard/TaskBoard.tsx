@@ -3,10 +3,15 @@ import Task from "../task/Task";
 import AddTask from "../addTask/AddTask";
 import useTaskManager from "../../hooks/useTaskManager";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
 
 const TaskBoard = () => {
-  const { tasks, addTask, deleteTask, toggleDone, sortTasks } = useTaskManager();
-  
+  const { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks } = useTaskManager();
+
+  useEffect(()=> {
+    loadTasks();
+  }, [])
+
   return (
     <>
       <AddTask onAddTask={addTask} />
@@ -32,7 +37,7 @@ const TaskBoard = () => {
                 <Task
                   key={task.id}
                   task={task}
-                  onDelete={deleteTask}
+                  onDelete={removeTask}
                   toggleDone={toggleDone}
                 />
               </motion.div>
