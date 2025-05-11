@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getTasks, createTask } from "../services/taskService";
+import { useState } from "react";
+import { getTasks, createTask, deleteTask } from "../services/taskService";
 
 export type Tasktype = {
   id: number;
@@ -13,17 +13,20 @@ const useTaskManager = () => {
   const [tasks, setTasks] = useState<Tasktype[]>([]);
 
   // Load Tasks from API on component mount
-  useEffect(() => {
-    getTasks().then(setTasks);
-  }, []);
+  const loadTasks = async () => {
+    try {
+      await getTasks().then(setTasks);
+    } catch (err) {
+      console.error("Erro ao carregar tasks: ", err);
+    }
+  };
 
   const addTask = (title: string) => {
     if (!title.trim() || tasks.some((task) => task.title === title)) {
       return;
     }
 
-    const newTask: Tasktype = {
-      id: tasks.length + 1,
+    const newTask = {
       title,
       body: "Clique aqui para adicionar detalhes...",
       completed: false,
@@ -33,7 +36,7 @@ const useTaskManager = () => {
     const create = async () => {
       try {
         const successful = await createTask(newTask);
-        if (successful) setTasks([...tasks, newTask]);
+        if (successful) loadTasks();
       } catch (err) {
         console.error("Erro ao criar task: ", err);
       }
@@ -42,8 +45,9 @@ const useTaskManager = () => {
     create();
   };
 
-  const deleteTask = (id: number) => {
+  const removeTask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+    deleteTask(id);
   };
 
   const toggleDone = (id: number) => {
@@ -66,7 +70,7 @@ const useTaskManager = () => {
     return sortedTasks;
   };
 
-  return { tasks, addTask, deleteTask, toggleDone, sortTasks };
+  return { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks };
 };
 
 export default useTaskManager;
