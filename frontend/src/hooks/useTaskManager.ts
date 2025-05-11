@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getTasks, createTask, deleteTask } from "../services/taskService";
+import { getTasks, createTask, deleteTask, updateTask } from "../services/taskService";
 
 export type Tasktype = {
   id: number;
@@ -52,10 +52,22 @@ const useTaskManager = () => {
 
   const toggleDone = (id: number) => {
     setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
+      prevTasks.map((task) => {
+        if(task.id === id) {
+          try {
+            const updatedTask = {...task, completed: !task.completed}
+            updateTask(updatedTask)
+            return updatedTask
+          }catch(err) {
+            console.error("Erro ao atualizar task: ", err);
+          }
+        }
+        return task
+      }
       )
     );
+
+
   };
 
   const sortTasks = () => {
