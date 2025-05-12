@@ -44,6 +44,8 @@
   color: inherit;
   overflow: hidden;
   transition: var(--transition);
+  hyphens: auto;
+  word-break: break-word;
 }
 
 .checkBoxTask + .titleTask::after {
@@ -70,6 +72,8 @@
   border-radius: 3px;
   cursor: pointer;
   transition: var(--transition);
+  flex-shrink: 0;
+  margin-left: 2%;
 }
 
 .trashIcon:hover {
