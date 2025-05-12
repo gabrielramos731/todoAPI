@@ -1,7 +1,12 @@
-import { useState, useEffect } from "react";
-import { getTasks } from "../services/taskService";
+import { useState } from "react";
+import {
+  getTasks,
+  createTask,
+  deleteTask,
+  updateTask,
+} from "../services/taskService";
 
-type Tasktype = {
+export type Tasktype = {
   id: number;
   title: string;
   body: string;
@@ -12,19 +17,13 @@ type Tasktype = {
 const useTaskManager = () => {
   const [tasks, setTasks] = useState<Tasktype[]>([]);
 
-  // Load Tasks from API on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-      } catch (error) {
-        console.error("Erro ao buscar tarefas:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const loadTasks = async () => {
+    try {
+      await getTasks().then(setTasks);
+    } catch (err) {
+      console.error("Erro ao carregar tasks: ", err);
+    }
+  };
 
   const addTask = (title: string) => {
     if (!title.trim() || tasks.some((task) => task.title === title)) {
@@ -32,28 +31,63 @@ const useTaskManager = () => {
     }
 
     const newTask = {
-      id: tasks.length + 1,
       title,
-      body: "",
+      body: "Clique aqui para adicionar detalhes...",
       completed: false,
       createDate: new Date(),
     };
-    setTasks([...tasks, newTask]);
+
+    const create = async () => {
+      try {
+        const successful = await createTask(newTask);
+        if (successful) loadTasks();
+      } catch (err) {
+        console.error("Erro ao criar task: ", err);
+      }
+    };
+
+    create();
   };
 
-  const deleteTask = (id: number) => {
+  const removeTask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+    deleteTask(id);
   };
 
   const toggleDone = (id: number) => {
     setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+      prevTasks.map((task) => {
+        if (task.id === id) {
+          try {
+            const updatedTask = { ...task, completed: !task.completed };
+            updateTask(updatedTask);
+            return updatedTask;
+          } catch (err) {
+            console.error("Erro ao atualizar task: ", err);
+          }
+        }
+        return task;
+      })
     );
   };
 
-  return { tasks, addTask, deleteTask, toggleDone };
+  const sortTasks = () => {
+    const sortedTasks = [...tasks].sort((a, b) => {
+      if (a.completed === b.completed) {
+        return (
+          new Date(b.createDate).getTime() - new Date(a.createDate).getTime()
+        );
+      }
+      return a.completed ? 1 : -1;
+    });
+    return sortedTasks;
+  };
+
+  const upgradeTask = (task: Tasktype) => {
+    updateTask(task)
+  };
+
+  return { tasks, addTask, removeTask, toggleDone, sortTasks, loadTasks, upgradeTask };
 };
 
 export default useTaskManager;

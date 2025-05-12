@@ -105,11 +105,15 @@
   max-width: 500px;
 }
 
+.bodyDescription {
+  hyphens: auto;
+  word-break: break-word;
+}
+
 .inputBodyTask {
   background-color: transparent;
   width: 100%;
   text-align: center;
   font-size: var(--font-size);
   color: #808080;
-  
 }
